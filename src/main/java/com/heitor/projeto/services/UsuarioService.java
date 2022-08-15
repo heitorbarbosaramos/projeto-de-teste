@@ -56,6 +56,10 @@ public class UsuarioService {
 		return dtos;
 	}
 
+	public void deleteUsuario(Long idUsuario) {
+		repositoty.delete(usuMapper.toModel(findById(idUsuario)));
+	}
+	
 	private void verificaEmailCadastrado(UsuarioDTO dto) {
 		Usuario usuario = repositoty.findByEmail(dto.getEmail());
 		if (usuario != null && !usuario.getId().equals(dto.getId()) ) {
