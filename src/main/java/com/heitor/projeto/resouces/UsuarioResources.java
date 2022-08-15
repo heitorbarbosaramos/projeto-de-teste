@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.heitor.projeto.domain.Usuario;
+import com.heitor.projeto.domain.dto.UsuarioDTO;
 import com.heitor.projeto.services.UsuarioService;
 
 @RestController
@@ -32,9 +33,9 @@ public class UsuarioResources {
 	}
 	
 	@GetMapping("/{idUsuario}")
-	public ResponseEntity<Usuario> findById(@PathVariable(value = "idUsuario") Long idUsuario){
-		Usuario usuario = usuarioService.findById(idUsuario);
-		return ResponseEntity.ok(usuario);
+	public ResponseEntity<UsuarioDTO> findById(@PathVariable(value = "idUsuario") Long idUsuario){
+		UsuarioDTO usuarioDTO = usuarioService.findById(idUsuario);
+		return ResponseEntity.ok(usuarioDTO);
 	}
 	
 

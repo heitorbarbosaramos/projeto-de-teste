@@ -4,12 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.heitor.projeto.domain.Usuario;
+import com.heitor.projeto.domain.dto.UsuarioDTO;
+import com.heitor.projeto.mapper.UsuarioMapper;
 import com.heitor.projeto.repository.UsuarioRepositoty;
 
 @Service
 public class UsuarioService {
 
 	private final UsuarioRepositoty repositoty;
+	
+	private UsuarioMapper usuMapper = UsuarioMapper.INSTANCE;
 	
 	@Autowired
 	public UsuarioService(UsuarioRepositoty repositoty) {
@@ -21,8 +25,9 @@ public class UsuarioService {
 		return usuario;
 	}
 	
-	public Usuario findById(Long idUsuario) {
+	public UsuarioDTO findById(Long idUsuario) {
 		Usuario usuario = repositoty.findById(idUsuario).orElseThrow();
-		return usuario;
+		UsuarioDTO usuarioDTO = usuMapper.toDto(usuario);
+		return usuarioDTO;
 	}
 }
