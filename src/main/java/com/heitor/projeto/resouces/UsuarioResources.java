@@ -1,5 +1,7 @@
 package com.heitor.projeto.resouces;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,10 @@ public class UsuarioResources {
 		return ResponseEntity.ok(usuarioDTO);
 	}
 	
+	@GetMapping
+	public ResponseEntity<List<UsuarioDTO>> findAll(){
+		return ResponseEntity.ok(usuarioService.findAll());
+	}
 
 
 }

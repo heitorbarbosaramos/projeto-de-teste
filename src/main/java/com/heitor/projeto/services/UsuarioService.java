@@ -1,5 +1,8 @@
 package com.heitor.projeto.services;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +32,10 @@ public class UsuarioService {
 		Usuario usuario = repositoty.findById(idUsuario).orElseThrow();
 		UsuarioDTO usuarioDTO = usuMapper.toDto(usuario);
 		return usuarioDTO;
+	}
+	
+	public List<UsuarioDTO> findAll(){
+		List<UsuarioDTO> dtos = repositoty.findAll().stream().map(x -> usuMapper.toDto(x)).collect(Collectors.toList());
+		return dtos;
 	}
 }
