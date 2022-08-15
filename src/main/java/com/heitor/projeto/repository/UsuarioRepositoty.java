@@ -8,4 +8,6 @@ import com.heitor.projeto.domain.Usuario;
 @Repository
 public interface UsuarioRepositoty extends JpaRepository<Usuario, Long> {
 
+	Usuario findByEmail(String email);
+
 }

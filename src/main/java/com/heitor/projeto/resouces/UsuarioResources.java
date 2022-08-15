@@ -1,5 +1,6 @@
 package com.heitor.projeto.resouces;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -12,8 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.heitor.projeto.domain.Usuario;
 import com.heitor.projeto.domain.dto.UsuarioDTO;
 import com.heitor.projeto.services.UsuarioService;
 
@@ -29,9 +30,10 @@ public class UsuarioResources {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Usuario> save(@RequestBody @Valid Usuario usuario){
-		usuario = usuarioService.save(usuario);
-		return ResponseEntity.ok(usuario);
+	public ResponseEntity<UsuarioDTO> save(@RequestBody @Valid UsuarioDTO usuario){
+		usuario = usuarioService.newUser(usuario);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(usuario.getId()).toUri();
+		return ResponseEntity.created(uri).build();
 	}
 	
 	@GetMapping("/{idUsuario}")
