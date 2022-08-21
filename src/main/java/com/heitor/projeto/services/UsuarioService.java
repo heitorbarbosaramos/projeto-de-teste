@@ -15,13 +15,15 @@ import com.heitor.projeto.repository.UsuarioRepositoty;
 @Service
 public class UsuarioService {
 
-	private final UsuarioRepositoty repositoty;
-
+	@Autowired
+	private UsuarioRepositoty repositoty;
+	
+	@Autowired
 	private UsuarioMapper usuMapper = UsuarioMapper.INSTANCE;
 
 	@Autowired
 	public UsuarioService(UsuarioRepositoty repositoty) {
-		this.repositoty = repositoty;
+		//this.repositoty = repositoty;
 	}
 
 	private Usuario save(Usuario usuario) {
