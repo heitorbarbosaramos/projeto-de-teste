@@ -3,6 +3,7 @@ package com.heitor.projeto.services;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
@@ -58,6 +59,21 @@ public class UsuarioServiceTest {
 		assertEquals(ID, usuarioDTO.getId());
 		assertEquals(NOME, usuarioDTO.getName());
 		assertEquals(EMAIL, usuarioDTO.getEmail());
+		
+	}
+	
+	@Test
+	void quando_chamar_findById_nao_voltar_usuario() {
+		Mockito.when(repositoty.findById(ID)).thenThrow(new NoSuchElementException("No value present"));
+		
+		try {
+			service.findById(ID);
+		}catch (Exception e) {
+			assertEquals(NoSuchElementException.class, e.getClass());
+			assertEquals("No value present", e.getMessage());
+		}
+		
+		
 		
 	}
 	
