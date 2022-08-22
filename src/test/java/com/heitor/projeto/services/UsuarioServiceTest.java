@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.any;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.times;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -133,6 +134,16 @@ public class UsuarioServiceTest {
 		assertEquals(NOME_ATUALIZA, response.getName());
 	}
 	
+	@Test
+	private void quando_deletar_usuario() {
+		Mockito.when(repositoty.findById(Mockito.anyLong())).thenReturn(usuarioOtional);
+		Mockito.when(usuMapper.toModel(Mockito.any())).thenReturn(usuario);
+		Mockito.doNothing().when(repositoty).delete(Mockito.any());
+		
+		service.deleteUsuario(ID);
+		
+		Mockito.verify(repositoty, times(2)).delete(Mockito.any());
+	}
 	
 	private void startUsers() {
 		usuario = new Usuario(ID, NOME, EMAIL, SENHA);
