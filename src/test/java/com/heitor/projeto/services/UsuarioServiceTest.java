@@ -27,10 +27,11 @@ import com.heitor.projeto.repository.UsuarioRepositoty;
 @SpringBootTest
 public class UsuarioServiceTest {
 	
-	private final Long ID 		= 1l;
-	private final String NOME 	= "Usuario Nome de Teste";
-	private final String EMAIL 	= "email@email.com";
-	private final String SENHA 	= "123";
+	private final Long ID 				= 1l;
+	private final String NOME 			= "Usuario Nome de Teste";
+	private final String EMAIL 			= "email@email.com";
+	private final String SENHA 			= "123";
+	private final String NOME_ATUALIZA 	= "Usuario Novo Nome Atualizado";
 
 	@InjectMocks
 	private UsuarioService service;
@@ -117,6 +118,21 @@ public class UsuarioServiceTest {
 		
 		
 	}
+	
+	@Test
+	public void quando_atalizar_usuario() {
+		Mockito.when(repositoty.findById(Mockito.anyLong())).thenReturn(usuarioOtional);
+		Mockito.when(repositoty.save(Mockito.any())).thenReturn(usuario);
+		Mockito.when(usuMapper.toDto(Mockito.any())).thenReturn(usuarioDto);
+		
+		usuarioDto.setName(NOME_ATUALIZA);
+		UsuarioDTO response = service.update(ID, usuarioDto);
+		
+		assertNotNull(response);
+		assertEquals(UsuarioDTO.class, response.getClass());
+		assertEquals(NOME_ATUALIZA, response.getName());
+	}
+	
 	
 	private void startUsers() {
 		usuario = new Usuario(ID, NOME, EMAIL, SENHA);
