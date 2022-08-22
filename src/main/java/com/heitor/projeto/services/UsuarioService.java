@@ -18,7 +18,6 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepositoty repositoty;
 	
-	@Autowired
 	private UsuarioMapper usuMapper = UsuarioMapper.INSTANCE;
 
 	@Autowired
