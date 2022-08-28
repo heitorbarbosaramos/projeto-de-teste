@@ -1,5 +1,7 @@
 package com.heitor.projeto.builder;
 
+import java.util.Optional;
+
 import com.heitor.projeto.domain.Usuario;
 import com.heitor.projeto.domain.dto.UsuarioDTO;
 
@@ -31,5 +33,10 @@ public class UsuarioBuilder {
 		dto.setPassword(SENHA);
 		
 		return dto;
+	}
+	
+	public static Optional<Usuario> criarOptional(){
+		Optional<Usuario> optional = Optional.of(criarObjeto());
+		return optional;
 	}
 }

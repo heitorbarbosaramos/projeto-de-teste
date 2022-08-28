@@ -24,12 +24,13 @@ import com.heitor.projeto.services.UsuarioService;
 @RequestMapping("/usuario")
 public class UsuarioResources {
 	
-	private final UsuarioService usuarioService;
-	
 	@Autowired
-	public UsuarioResources(UsuarioService usuarioService) {
-		this.usuarioService = usuarioService;
-	}
+	private UsuarioService usuarioService;
+	
+//	@Autowired
+//	public UsuarioResources(UsuarioService usuarioService) {
+//		this.usuarioService = usuarioService;
+//	}
 	
 	@PostMapping
 	public ResponseEntity<UsuarioDTO> save(@RequestBody @Valid UsuarioDTO usuario){
