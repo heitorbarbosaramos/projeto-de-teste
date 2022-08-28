@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.heitor.projeto.builder.UsuarioBuilder;
@@ -39,6 +40,17 @@ public class UsuarioResourcesTest {
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
 		startEntidades();
+	}
+	
+	@Test
+	void quando_salvar_usuario() {
+		Mockito.when(usuarioService.newUser(Mockito.any())).thenReturn(usuarioDto);
+
+		ResponseEntity<UsuarioDTO> dto = resources.save(usuarioDto);
+		
+		Assertions.assertNotNull(dto);
+		Assertions.assertEquals(HttpStatus.CREATED, dto.getStatusCode());
+		
 	}
 	
 	@Test
