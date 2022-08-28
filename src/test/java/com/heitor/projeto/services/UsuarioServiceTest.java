@@ -120,11 +120,13 @@ public class UsuarioServiceTest {
 		Mockito.when(usuMapper.toDto(Mockito.any())).thenReturn(usuarioDto);
 		
 		usuarioDto.setName(UsuarioBuilder.NOME_ATUALIZA);
+		usuarioDto.setPassword("11223344");
 		UsuarioDTO response = service.update(UsuarioBuilder.ID, usuarioDto);
 		
 		assertNotNull(response);
 		assertEquals(UsuarioDTO.class, response.getClass());
 		assertEquals(UsuarioBuilder.NOME_ATUALIZA, response.getName());
+		assertEquals(response.getPassword(), usuarioDto.getPassword());
 	}
 	
 	@Test
