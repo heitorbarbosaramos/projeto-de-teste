@@ -138,11 +138,26 @@ public class UsuarioServiceTest {
 		Mockito.verify(repositoty, times(1)).delete(Mockito.any());
 	}
 	
+	@Test
+	public void quando_verificar_email_ja_cadastrado() {
+		Mockito.when(repositoty.findById(Mockito.anyLong())).thenReturn(usuarioOtional);
+		Mockito.when(repositoty.findByEmail(Mockito.anyString())).thenReturn(usuario);
+		
+		usuario.setId(UsuarioBuilder.ID + 1);
+		
+		try {
+			service.newUser(usuarioDto);
+		}catch (Exception e) {
+			assertEquals(DataIntegrityViolationException.class, e.getClass());
+			assertEquals("Email já cadastrado", e.getMessage());
+		}
+	
+	}
+	
 	private void startUsers() {
 		usuario = UsuarioBuilder.criarObjeto();
 		usuarioDto = UsuarioBuilder.criarObjetDto();
 		usuarioOtional = Optional.of(usuario);
 	}
-	
-	
+		
 }
