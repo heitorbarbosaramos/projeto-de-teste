@@ -80,6 +80,18 @@ public class UsuarioResourcesTest {
 		
 	}
 	
+	@Test
+	void quando_deletar() {
+		
+		Mockito.doNothing().when(usuarioService).deleteUsuario(Mockito.anyLong());
+		
+		ResponseEntity<?> response = resources.deleteUsuario(1l);
+		
+		Assertions.assertNotNull(response);
+		Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+
+	}
+	
 	void startEntidades() {
 		usuarioDto 		= UsuarioBuilder.criarObjetDto();
 		usuarioOptional = UsuarioBuilder.criarOptional();
