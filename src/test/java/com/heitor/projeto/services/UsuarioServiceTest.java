@@ -91,9 +91,24 @@ public class UsuarioServiceTest {
 		Mockito.when(repositoty.save(Mockito.any())).thenReturn(usuario);
 		Mockito.when(usuMapper.toDto(Mockito.any())).thenReturn(usuarioDto);
 		
+		String nome  = "Novo Nome usuario";
+		String email = "novo.email@email.com";
+		String senha = "12223344";
+		
+		usuario.setName(nome);
+		usuario.setEmail(email);
+		usuario.setPassword(senha);
+		
+		usuarioDto.setName(nome);
+		usuarioDto.setEmail(email);
+		usuarioDto.setPassword(senha);
+		
 		UsuarioDTO response = service.newUser(usuarioDto);
 		
 		assertNotNull(response);
+		assertEquals(nome, response.getName());
+		assertEquals(email, response.getEmail());
+		assertEquals(senha, response.getPassword());
 	}
 	
 	@Test
