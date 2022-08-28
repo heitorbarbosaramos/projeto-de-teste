@@ -128,14 +128,14 @@ public class UsuarioServiceTest {
 	}
 	
 	@Test
-	private void quando_deletar_usuario() {
+	public void quando_deletar_usuario() {
 		Mockito.when(repositoty.findById(Mockito.anyLong())).thenReturn(usuarioOtional);
 		Mockito.when(usuMapper.toModel(Mockito.any())).thenReturn(usuario);
 		Mockito.doNothing().when(repositoty).delete(Mockito.any());
 		
 		service.deleteUsuario(UsuarioBuilder.ID);
 		
-		Mockito.verify(repositoty, times(2)).delete(Mockito.any());
+		Mockito.verify(repositoty, times(1)).delete(Mockito.any());
 	}
 	
 	private void startUsers() {
