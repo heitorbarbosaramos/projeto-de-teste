@@ -17,6 +17,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import com.heitor.projeto.builder.UsuarioBuilder;
 import com.heitor.projeto.domain.Usuario;
 import com.heitor.projeto.domain.dto.UsuarioDTO;
 import com.heitor.projeto.mapper.UsuarioMapper;
@@ -25,11 +26,6 @@ import com.heitor.projeto.repository.UsuarioRepositoty;
 @SpringBootTest
 public class UsuarioServiceTest {
 	
-	private final Long ID 				= 1l;
-	private final String NOME 			= "Usuario Nome de Teste";
-	private final String EMAIL 			= "email@email.com";
-	private final String SENHA 			= "123";
-	private final String NOME_ATUALIZA 	= "Usuario Novo Nome Atualizado";
 
 	@InjectMocks
 	private UsuarioService service;
@@ -55,22 +51,22 @@ public class UsuarioServiceTest {
 		Mockito.when(repositoty.findById(Mockito.anyLong())).thenReturn(usuarioOtional);
 		Mockito.when(usuMapper.toDto(Mockito.any())).thenReturn(usuarioDto);
 		
-		UsuarioDTO usuarioDTO = service.findById(ID);
+		UsuarioDTO usuarioDTO = service.findById(UsuarioBuilder.ID);
 		
 		assertNotNull(usuarioDTO);
 		assertEquals(UsuarioDTO.class, usuarioDTO.getClass());
-		assertEquals(ID, usuarioDTO.getId());
-		assertEquals(NOME, usuarioDTO.getName());
-		assertEquals(EMAIL, usuarioDTO.getEmail());
+		assertEquals(UsuarioBuilder.ID, usuarioDTO.getId());
+		assertEquals(UsuarioBuilder.NOME, usuarioDTO.getName());
+		assertEquals(UsuarioBuilder.EMAIL, usuarioDTO.getEmail());
 		
 	}
 	
 	@Test
 	void quando_chamar_findById_nao_voltar_usuario() {
-		Mockito.when(repositoty.findById(ID)).thenThrow(new NoSuchElementException("No value present"));
+		Mockito.when(repositoty.findById(UsuarioBuilder.ID)).thenThrow(new NoSuchElementException("No value present"));
 		
 		try {
-			service.findById(ID);
+			service.findById(UsuarioBuilder.ID);
 		}catch (Exception e) {
 			assertEquals(NoSuchElementException.class, e.getClass());
 			assertEquals("No value present", e.getMessage());
@@ -123,12 +119,12 @@ public class UsuarioServiceTest {
 		Mockito.when(repositoty.save(Mockito.any())).thenReturn(usuario);
 		Mockito.when(usuMapper.toDto(Mockito.any())).thenReturn(usuarioDto);
 		
-		usuarioDto.setName(NOME_ATUALIZA);
-		UsuarioDTO response = service.update(ID, usuarioDto);
+		usuarioDto.setName(UsuarioBuilder.NOME_ATUALIZA);
+		UsuarioDTO response = service.update(UsuarioBuilder.ID, usuarioDto);
 		
 		assertNotNull(response);
 		assertEquals(UsuarioDTO.class, response.getClass());
-		assertEquals(NOME_ATUALIZA, response.getName());
+		assertEquals(UsuarioBuilder.NOME_ATUALIZA, response.getName());
 	}
 	
 	@Test
@@ -137,15 +133,15 @@ public class UsuarioServiceTest {
 		Mockito.when(usuMapper.toModel(Mockito.any())).thenReturn(usuario);
 		Mockito.doNothing().when(repositoty).delete(Mockito.any());
 		
-		service.deleteUsuario(ID);
+		service.deleteUsuario(UsuarioBuilder.ID);
 		
 		Mockito.verify(repositoty, times(2)).delete(Mockito.any());
 	}
 	
 	private void startUsers() {
-		usuario = new Usuario(ID, NOME, EMAIL, SENHA);
-		usuarioDto = new UsuarioDTO(ID, NOME, EMAIL, SENHA);
-		usuarioOtional = Optional.of(new Usuario(ID, NOME, EMAIL, SENHA));
+		usuario = UsuarioBuilder.criarObjeto();
+		usuarioDto = UsuarioBuilder.criarObjetDto();
+		usuarioOtional = Optional.of(usuario);
 	}
 	
 	
