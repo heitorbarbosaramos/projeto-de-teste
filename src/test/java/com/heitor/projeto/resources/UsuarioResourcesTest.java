@@ -67,6 +67,19 @@ public class UsuarioResourcesTest {
 		Assertions.assertEquals(ResponseEntity.class, response.getClass());
 	}
 	
+	@Test
+	void quando_atualizar() {
+		
+		Mockito.when(usuarioService.update(Mockito.anyLong(), Mockito.any())).thenReturn(usuarioDto);
+		
+		 ResponseEntity<UsuarioDTO> response = resources.update(1l, usuarioDto);
+		 
+		 Assertions.assertNotNull(response);
+		 Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+		 Assertions.assertEquals(UsuarioDTO.class, response.getBody().getClass());
+		
+	}
+	
 	void startEntidades() {
 		usuarioDto 		= UsuarioBuilder.criarObjetDto();
 		usuarioOptional = UsuarioBuilder.criarOptional();
